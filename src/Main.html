@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Code Test - Pets</title>
+ <script src="js/axios.min.js"></script>
+ <script>
+  
+    'use strict';
+    //Initialize
+    function init() {
+      axios.get('http://5c92dbfae7b1a00014078e61.mockapi.io/owners').then(res=>{
+       console.log('**************Before the grouping:');
+       console.log(res.data);
+
+       console.log('**************After the grouping:');
+       let dest = groupByGender(res.data);
+       console.log(dest);
+       panel1.innerHTML = generateHtml(dest);
+      });
+    }
+
+    //Generate HTML dynamically
+    function generateHtml(dest) {
+      console.log('**************Start generating HTML:');
+       let _html = '';
+       let panel1=document.getElementById('panel1');
+       for(let i=0,l=dest.length;i<l;i++){
+          let _gender = '<p>' + dest[i].gender + '</p>';
+          let _name = findName(dest[i].data);
+          _html += '<li>' + _gender + '<ul>'+_name+'</ul>'+'</li>';
+       } 
+       _html = '<ul>' + _html + '</ul>'
+       console.log(_html);
+       return _html;
+    }
+
+    //Group by people gender
+    function groupByGender(data) {
+      let map = {}, dest = [];
+      for(let i = 0; i < data.length; i++){
+        let ai = data[i];
+        if(!map[ai.gender]){
+            dest.push({
+                gender: ai.gender,
+                data: [ai]
+            });
+            map[ai.gender] = ai;
+        }else{
+            for(let j = 0; j < dest.length; j++){
+                let dj = dest[j];
+                if(dj.gender == ai.gender){
+                    dj.data.push(ai);
+                    break;
+                }
+            }
+        }
+        }
+        return dest;
+    }
+
+    //Find people name
+    function findName(arr) {
+      let _name = '';
+      for(let i=0,l=arr.length;i<l;i++){
+        let _pets = findPets(arr[i].pets);
+        _name += '<li>' + '<p>' +arr[i].name+ '</p>'+ '<ul>'+_pets+'</ul>'+ '</li>';
+      }
+     return _name;
+    }
+
+    //Find pets and their name and type
+    function findPets(arr) {
+        if(!arr && typeof(arr)!="undefined" && arr!=0) {
+          return '';
+        } else {
+          let _name = '';
+          arr.forEach(function(value,index,array){
+            if(value.type == "Cat") {
+              _name += '<li>' + '<p>' +value.name+'('+value.type+')'+ '</p>'+ '</li>';
+            }
+          });
+          return _name;
+        }
+    }
+    //Call initialization method
+    init();
+
+ </script>
+
+</head>
+<body>
+   <div id="panel1"></div>
+</body>
+</html>
