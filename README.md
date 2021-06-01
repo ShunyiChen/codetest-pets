@@ -1,7 +1,7 @@
 # CodeTest-Pets
 
 
-<img src="https://github.com/ShunyiChen/codetest-pets/tree/main/src/images/screenshot.png" alt="Trace view screenshot" />
+<img src="https://github.com/ShunyiChen/codetest-pets/blob/main/src/images/screenshot.png" alt="Trace view screenshot" />
 
 ## Available Scripts
 
@@ -30,6 +30,7 @@ Your app is ready to be deployed!
 
 You may serve it with a static server:
 ### `serve -s build`
+```
 ┌──────────────────────────────────────────────────┐
 │                                                  │
 │   Serving!                                       │
@@ -40,6 +41,7 @@ You may serve it with a static server:
 │   Copied local address to clipboard!             │
 │                                                  │
 └──────────────────────────────────────────────────┘
+```
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `yarn eject`
